@@ -2,7 +2,11 @@ pragma solidity ^0.4.4;
 
 contract SlotMachine {
 
+    address public slotMachineFunds;
+
     uint256 public coinPrice = 0.1 ether;
+
+    address owner;
 
     event Rolled(address sender, uint rand1, uint rand2, uint rand3);
 
@@ -14,6 +18,15 @@ contract SlotMachine {
 
     mapping (address => Result) currResults;
     mapping (address => uint) pendingWithdrawals;
+
+    modifier onlyOwner() {
+        require(owner == msg.sender);
+        _;
+    }
+
+    function SlotMachine() {
+        owner = msg.sender;
+    }
 
     //the user plays one roll of the machine putting in money for the win
     function oneRoll() payable {
@@ -30,7 +43,7 @@ contract SlotMachine {
         currResults[msg.sender] = Result(rand1, rand2, rand3);
 
         if(result == 1) {
-            //pendingWithdrawals[msg.sender] = coinPrice 
+            pendingWithdrawals[msg.sender] = msg.value + coinPrice/2;
         }
 
     }
@@ -53,13 +66,20 @@ contract SlotMachine {
         msg.sender.transfer(amount);
     }
 
-    function getResult(address user) returns(uint, uint, uint) {
+    function getResult(address user) constant returns(uint, uint, uint) {
         Result r = currResults[user];
         return (r.rand1, r.rand2, r.rand3);
     }
 
     function balanceOf(address user) constant returns(uint) {
         return pendingWithdrawals[user];
+    }
+
+    function setCoinPrice(uint _coinPrice) onlyOwner {
+        coinPrice = _coinPrice;
+    }
+
+    function() onlyOwner payable {
     }
 
     function randomGen(uint seed) constant returns (uint randomNumber) {
