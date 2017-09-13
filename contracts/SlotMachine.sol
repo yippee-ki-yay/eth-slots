@@ -2,16 +2,21 @@ pragma solidity ^0.4.4;
 
 contract SlotMachine {
 
-    address public machineWallet;
+    uint256 public coinPrice = 0.1 ether;
 
-    uint256 public coinPrice;
+    event Rolled(address sender, uint rand1, uint rand2, uint rand3);
 
-    function SlotMachine(uint256 _coinPrice) {
-        coinPrice = _coinPrice;
+    struct Result {
+        uint rand1;
+        uint rand2;
+        uint rand3;
     }
 
+    mapping (address => Result) currResults;
+    mapping (address => uint) pendingWithdrawals;
+
     //the user plays one roll of the machine putting in money for the win
-    function oneRoll() payable returns(uint) {
+    function oneRoll() payable {
         require(msg.value >= coinPrice);
 
         uint rand1 = randomGen(msg.value);
@@ -20,7 +25,14 @@ contract SlotMachine {
 
         uint result = gameLogic(rand1, rand2, rand3);
 
-        return result;
+        Rolled(msg.sender, rand1, rand2, rand3);
+
+        currResults[msg.sender] = Result(rand1, rand2, rand3);
+
+        if(result == 1) {
+            //pendingWithdrawals[msg.sender] = coinPrice 
+        }
+
     }
 
     function gameLogic(uint rand1, uint rand2, uint rand3) returns(uint) {
@@ -33,16 +45,25 @@ contract SlotMachine {
         }
     }
 
+    function withdraw() {
+        uint amount = pendingWithdrawals[msg.sender];
+
+        pendingWithdrawals[msg.sender] = 0;
+
+        msg.sender.transfer(amount);
+    }
+
+    function getResult(address user) returns(uint, uint, uint) {
+        Result r = currResults[user];
+        return (r.rand1, r.rand2, r.rand3);
+    }
+
+    function balanceOf(address user) constant returns(uint) {
+        return pendingWithdrawals[user];
+    }
 
     function randomGen(uint seed) constant returns (uint randomNumber) {
         return(uint(sha3(block.blockhash(block.number-1), seed )) % 6);
     }
 
-    function buyTokens(uint256 numTokens) {
-        require(numTokens <= 5);
-        require(msg.value >= coinPrice * numTokens);
-
-        //TODO
-
-    }
 }

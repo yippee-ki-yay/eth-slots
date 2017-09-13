@@ -51,13 +51,22 @@ App = {
 
       var account = accounts[0];
 
+      var event;
 
       App.contracts.SlotMachine.deployed().then(function(instance) {
         slotMachineInstance = instance;
 
-         return slotMachineInstance.oneRoll.sendTransaction(account, {from: account, value: web3.toWei(num_eth.toString(), 'ether')});
+        event = slotMachineInstance.Rolled();
+
+        event.watch(function(err, resp) {
+            console.log(resp);
+        });
+
+        return slotMachineInstance.oneRoll.sendTransaction({from: account, value: web3.toWei('0.1', 'ether')});
 
       }).then(function(res) {
+
+    
           console.log(res);
       })
       .catch(function(err) {
