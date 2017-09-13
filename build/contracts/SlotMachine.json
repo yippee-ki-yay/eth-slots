@@ -1,0 +1,122 @@
+{
+  "contract_name": "SlotMachine",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "machineWallet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "numTokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "buyTokens",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "seed",
+          "type": "uint256"
+        }
+      ],
+      "name": "randomGen",
+      "outputs": [
+        {
+          "name": "randomNumber",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "oneRoll",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "coinPrice",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "rand1",
+          "type": "uint256"
+        },
+        {
+          "name": "rand2",
+          "type": "uint256"
+        },
+        {
+          "name": "rand3",
+          "type": "uint256"
+        }
+      ],
+      "name": "gameLogic",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_coinPrice",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000c57fe5b60405160208061029d83398101604052515b60018190555b505b610268806100356000396000f3006060604052361561005c5763ffffffff60e060020a6000350416630d6c6169811461005e5780633610724e1461008a578063434b14e71461009f578063a9e2bcfe146100c4578063ad0f2916146100de578063d08d8c6914610100575bfe5b341561006657fe5b61006e61012b565b60408051600160a060020a039092168252519081900360200190f35b341561009257fe5b61009d60043561013a565b005b34156100a757fe5b6100b260043561015f565b60408051918252519081900360200190f35b6100b261018d565b60408051918252519081900360200190f35b34156100e657fe5b6100b26101e8565b60408051918252519081900360200190f35b341561010857fe5b6100b26004356024356044356101ee565b60408051918252519081900360200190f35b600054600160a060020a031681565b60058111156101495760006000fd5b600154810234101561015b5760006000fd5b5b50565b6040805160001943014081526020810183905281519081900390910190206000906006905b0690505b919050565b6000600060006000600060015434101515156101a95760006000fd5b6101b23461015f565b93506101c034600a0161015f565b92506101ce3460140161015f565b91506101db8484846101ee565b90508094505b5050505090565b60015481565b600082841480156101fe57508184145b1561020b57506001610233565b8284148061021857508184145b8061022257508183145b1561022f57506002610233565b5060035b5b5b93925050505600a165627a7a72305820be98f9783c01df3fb67dade88544e6e91b39179fd6abcab324c7242b944ffbc00029",
+  "networks": {
+    "1505144757177": {
+      "events": {},
+      "links": {},
+      "address": "0x2716f965336fa71a5afdbcf864a522d52e2dd5ab",
+      "updated_at": 1505320205181
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1505320205181
+}
