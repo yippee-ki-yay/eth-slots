@@ -48,10 +48,13 @@ App = {
   },
 
   whitdraw: function() {
-    // instance.withdraw.call().then(function(resp) {
-    //     console.log(resp);
-    // });
-    App.checkBalance();
+    instance.withdraw.call().then(function(resp) {
+        console.log(resp);
+        App.checkBalance();
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
   },
 
   checkAccount: function() {
@@ -77,8 +80,13 @@ App = {
     console.log("Acc: " + App.account);
 
     instance.balanceOf.call(App.account).then(function(balance) {
-        $("#balance").val(balance.valueOf());
-        console.log(balance.valueOf());
+
+        var balance = balance.valueOf();
+
+        var balanceInEther = web3.fromWei(balance, "ether");
+
+        $("#balance").text(balanceInEther + " ether");
+        
     });
    },
        

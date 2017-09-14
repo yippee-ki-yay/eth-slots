@@ -28,6 +28,7 @@ html {
     min-height: 100%;
 }
 body {
+    
 }
 b{
 	font-weight: 600;
@@ -66,7 +67,7 @@ h3{
 h4{
     display: table-cell;
     float: left;
-    font-size: 35px;
+    font-size: 20px;
     line-height: 31px;
     margin: 0 0 0;
     text-align: center;
@@ -85,15 +86,34 @@ h4{
 #plane {
 	position: absolute;
 	padding: 70px 60px; 
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #whitdraw {
 	position: absolute;
     margin-left: 60px;
     margin-top: 120px;
+    background-color: rgb(209, 79, 119);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 6px;
 }
 
+.instructions {
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 200px;
+    border: 7px;
+    border-radius: 4px;
+    width: 300px;
+    height: 400px;
+    border-style: solid;
+}
 
 /*
  * Casino

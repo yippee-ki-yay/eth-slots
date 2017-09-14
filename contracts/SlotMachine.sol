@@ -43,9 +43,9 @@ contract SlotMachine {
         currResults[msg.sender] = Result(rand1, rand2, rand3);
 
         if(result == 1) {
-            pendingWithdrawals[msg.sender] = msg.value + coinPrice * 10;
+            pendingWithdrawals[msg.sender] += msg.value + coinPrice;
         } else if(result == 2) {
-            pendingWithdrawals[msg.sender] = msg.value;
+            pendingWithdrawals[msg.sender] += msg.value;
         }
 
     }
