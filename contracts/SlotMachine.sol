@@ -43,11 +43,15 @@ contract SlotMachine {
         currResults[msg.sender] = Result(rand1, rand2, rand3);
 
         if(result == 1) {
-            pendingWithdrawals[msg.sender] = msg.value + coinPrice/2;
+            pendingWithdrawals[msg.sender] = msg.value + coinPrice * 10;
         } else if(result == 2) {
             pendingWithdrawals[msg.sender] = msg.value;
         }
 
+    }
+    
+    function contractBalance() returns(uint) {
+        return this.balance;
     }
 
     function gameLogic(uint rand1, uint rand2, uint rand3) returns(uint) {

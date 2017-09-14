@@ -48,7 +48,10 @@ App = {
   },
 
   whitdraw: function() {
-
+    // instance.withdraw.call().then(function(resp) {
+    //     console.log(resp);
+    // });
+    App.checkBalance();
   },
 
   checkAccount: function() {
@@ -71,6 +74,8 @@ App = {
 
    checkBalance: function() {
 
+    console.log("Acc: " + App.account);
+
     instance.balanceOf.call(App.account).then(function(balance) {
         $("#balance").val(balance.valueOf());
         console.log(balance.valueOf());
@@ -83,81 +88,83 @@ App = {
 
     console.log("Roll was pressed");
 
-    var slotMachineInstance;
+    App.contracts.SlotMachine.deployed().then(function(instance) {
 
-    web3.eth.getAccounts(function(error, accounts) {
-      if (error) {
-        console.log(error);
-      }
+        return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('0.1', 'ether')});
 
-      var account = accounts[0];
+    }).then(function() {
 
-      var event;
+        return instance.getResult(App.account);
+    }).then(function(res) {
+        if(res.length >= 2) {
+            App.roll1 = res[0].valueOf();
+            App.roll2 = res[1].valueOf();
+            App.roll3 = res[2].valueOf();
 
-      App.contracts.SlotMachine.deployed().then(function(instance) {
-        slotMachineInstance = instance;
+            console.log(App.roll1, App.roll2, App.roll3);
+        }
 
-        return slotMachineInstance.oneRoll.sendTransaction({from: account, value: web3.toWei('0.1', 'ether')});
-
-      }).then(function() {
-
-          return slotMachineInstance.getResult(account);
-      }).then(function(res) {
-          if(res.length >= 2) {
-              roll1 = res[0].valueOf();
-              roll2 = res[1].valueOf();
-              roll3 = res[2].valueOf();
-
-              console.log(roll1, roll2, roll3);
-          }
-
-           App.checkBalance();
-      })
-      .catch(function(err) {
-        console.log(err.message);
-      });
+        App.checkBalance();
+    })
+    .catch(function(err) {
+    console.log(err.message);
     });
   },
 
+  prizeWon: function() {
+
+    console.log("Prize won");
+
+    if((App.roll1 == App.roll2) && (App.roll1 == App.roll3)) {
+        $("#header-msg").text("Congratulation you won!!!");
+    } else if ((App.roll1 == App.roll2) || (App.roll1 == App.roll3) || (App.roll2 == App.roll3)) {
+        $("#header-msg").text("Not bad, you live to try again");
+    } else {
+        $("#header-msg").text("Ouch, maybe another try?");
+    }
+  },
+
   slotMachine: function() {
-      	var machine4 = $("#casino1").slotMachine({
+
+      	var machine1 = $("#casino1").slotMachine({
             active	: 0,
             delay	: 500
         });
 
-        var machine5 = $("#casino2").slotMachine({
+        var machine2 = $("#casino2").slotMachine({
             active	: 1,
             delay	: 500
         });
 
-        machine6 = $("#casino3").slotMachine({
+        var machine3 = $("#casino3").slotMachine({
             active	: 2,
             delay	: 500
         });
 
-        machine4.setRandomize(function() { return roll1; });
-        machine5.setRandomize(function() { return roll2; });
-        machine6.setRandomize(function() { return roll3; });
+        machine1.setRandomize(function() { return App.roll1; });
+        machine2.setRandomize(function() { return App.roll2; });
+        machine3.setRandomize(function() { return App.roll3; });
 
         var started = 0;
 
         $("#slotMachineButtonShuffle").click(function(){
             started = 3;
-            machine4.shuffle();
-            machine5.shuffle();
-            machine6.shuffle();
+            machine1.shuffle();
+            machine2.shuffle();
+            machine3.shuffle();
         });
 
         $("#slotMachineButtonStop").click(function(){
             switch(started){
                 case 3:
-                    machine4.stop();
+                    machine1.stop();
                     break;
                 case 2:
-                    machine5.stop();
+                    machine2.stop();
                     break;
                 case 1:
-                    machine6.stop();
+                    machine3.stop();
+                    App.prizeWon();
                     break;
             }
             started--;
