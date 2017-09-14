@@ -1,6 +1,8 @@
 App = {
   web3Provider: null,
   contracts: {},
+  account: null,
+  instance: null,
   roll1: -1,
   roll2: -1,
   roll3: -1,
@@ -32,7 +34,7 @@ App = {
       // Set the provider for our contract.
       App.contracts.SlotMachine.setProvider(App.web3Provider);
 
-      //App.checkBalance();
+      App.checkAccount();
       App.slotMachine();
 
     });
@@ -49,22 +51,37 @@ App = {
 
   },
 
-  checkBalance: function() {
+  checkAccount: function() {
     web3.eth.getAccounts(function(error, accounts) {
+        App.account = accounts[0];
 
-        var account = accounts[0];
+        App.contracts.SlotMachine.deployed().then(function(_instance) {
+            instance = _instance;
 
-        App.contracts.SlotMachine.deployed().then(function(instance) {
-            instance.balanceOf.call(account).then(function(balance) {
-                console.log(balance);
-            })
+             var event = instance.Rolled();
+
+             event.watch(function(err, resp) {
+                 console.log(resp);
+             });
+
+            App.checkBalance();
         });
-
     });
   },
 
+   checkBalance: function() {
+
+    instance.balanceOf.call(App.account).then(function(balance) {
+        $("#balance").val(balance.valueOf());
+        console.log(balance.valueOf());
+    });
+   },
+       
+
   startRoll: function() {
     event.preventDefault();
+
+    console.log("Roll was pressed");
 
     var slotMachineInstance;
 
@@ -80,12 +97,6 @@ App = {
       App.contracts.SlotMachine.deployed().then(function(instance) {
         slotMachineInstance = instance;
 
-        event = slotMachineInstance.Rolled();
-
-        event.watch(function(err, resp) {
-            console.log(resp);
-        });
-
         return slotMachineInstance.oneRoll.sendTransaction({from: account, value: web3.toWei('0.1', 'ether')});
 
       }).then(function() {
@@ -99,6 +110,8 @@ App = {
 
               console.log(roll1, roll2, roll3);
           }
+
+           App.checkBalance();
       })
       .catch(function(err) {
         console.log(err.message);
