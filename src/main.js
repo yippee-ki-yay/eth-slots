@@ -195,9 +195,9 @@ App = {
             delay	: 500
         });
 
-        App.machine1.setRandomize(function() { return App.roll1; });
-        App.machine2.setRandomize(function() { return App.roll2; });
-        App.machine3.setRandomize(function() { return App.roll3; });
+        App.machine1.setRandomize(function() { return App.roll1 - 1; });
+        App.machine2.setRandomize(function() { return App.roll2 - 1; });
+        App.machine3.setRandomize(function() { return App.roll3 - 1; });
 
         App.started = 0;
 
