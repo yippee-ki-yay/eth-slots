@@ -112,7 +112,9 @@ App = {
   startRoll: function() {
     event.preventDefault();
 
-    console.log("Roll was pressed");
+    if(App.started != 0) {
+        return;
+    }
 
     App.contracts.SlotMachine.deployed().then(function(instance) {
 
@@ -130,15 +132,29 @@ App = {
 
   prizeWon: function() {
 
-    if((App.roll1 == App.roll2) && (App.roll1 == App.roll3)) {
-        $("#header-msg").text("Congratulation you won!!!");
-    } else if ((App.roll1 == App.roll2) || (App.roll1 == App.roll3) || (App.roll2 == App.roll3)) {
-        $("#header-msg").text("Not bad, you live to try again");
+    var msg = "";
+
+    if(App.roll1 == 5 && App.roll2 == 5 && App.roll3 == 5) {
+        msg = "Congratulation you won 3 ether";
+    } else if(App.roll1 == 6 && App.roll2 == 5 && App.roll3 == 6)  {
+        msg = "Congratulation you won 2 ether";
+    } else if(App.roll1 == 4 && App.roll2 == 4 && App.roll3 == 4)  {
+        msg = "Congratulation you won 1.5 ether";
+    } else if(App.roll1 == 3 && App.roll2 == 3 && App.roll3 == 3)  {
+        msg = "Congratulation you won 1.2 ether";
+    } else if(App.roll1 == 2 && App.roll2 == 2 && App.roll3 == 2)  {
+        msg = "Congratulation you won 1 ether";
+    } else if(App.roll1 == 1 && App.roll2 == 1 && App.roll3 == 1)  {
+        msg = "Congratulation you won 0.5 ether";
     } else {
-        $("#header-msg").text("Ouch, maybe another try?");
+        msg = "Better luck next time";
     }
 
+    $("#header-msg").text(msg);
+
     App.checkBalance();
+
+    $("#slotMachineButtonShuffle").attr("disabled", false);
   },
 
   startShuffle: function() {
@@ -146,6 +162,8 @@ App = {
     App.machine1.shuffle();
     App.machine2.shuffle();
     App.machine3.shuffle();
+
+    $("#slotMachineButtonShuffle").attr("disabled", true);
   },
 
   slotMachine: function() {
