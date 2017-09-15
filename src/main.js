@@ -78,7 +78,16 @@ App = {
              var event = instance.Rolled();
 
              event.watch(function(err, resp) {
-                 console.log(resp);
+                 if(resp.event === "Rolled") {
+
+                     App.roll1 = resp.args.rand1.valueOf();
+                     App.roll2 = resp.args.rand2.valueOf();
+                     App.roll3 = resp.args.rand3.valueOf();
+
+                     console.log(App.roll1, App.roll2, App.roll3);
+
+                     setTimeout(App.checkBalance, 1000);
+                 }
              });
 
             App.checkBalance();
@@ -113,16 +122,6 @@ App = {
         App.startShuffle();
 
         return instance.getResult(App.account);
-    }).then(function(res) {
-        if(res.length >= 2) {
-            App.roll1 = res[0].valueOf();
-            App.roll2 = res[1].valueOf();
-            App.roll3 = res[2].valueOf();
-
-            console.log(App.roll1, App.roll2, App.roll3);
-        }
-
-        App.checkBalance();
     })
     .catch(function(err) {
     console.log(err.message);
