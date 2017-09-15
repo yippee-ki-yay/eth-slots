@@ -22,21 +22,63 @@
 	<body>
         <div>
 		<div class="header-line"></div>
-        <div id="plane">Money won: <b><span id="balance">0</span></b></div>
+        <div id="money">Money won: <b><span id="balance">0</span></b></div>
         <button id="whitdraw">Withdraw</button>
 
         <div class="instructions">
-            <h4>Instructions</h4>
-            <h4>- You have to install MetaMask</h4>
-            <h4>- Each roll costs 0.001 ether</h4>
-            <h4>- If you got 2 of the same you get another try</h4>
-            <h4>- If you got 3 of the same you double</h4>
+            <h4><b>Instructions</b></h4>
+            <h4 id="roll-cost">- Each roll costs 0.1 ether</h4>
+
+			<div class="instruction-table">
+				<div class="instruction-row">
+					<img src="../img/slot5.png" width="30" height="30"/>
+					<img src="../img/slot5.png" width="30" height="30"/>
+					<img src="../img/slot5.png" width="30" height="30"/>
+					<span class="eth-win"> = 3  ether </span>
+				</div>
+
+				<div class="instruction-row">
+					<img src="../img/slot6.png" width="30" height="30"/>
+					<img src="../img/slot5.png" width="30" height="30"/>
+					<img src="../img/slot6.png" width="30" height="30"/>
+					<span class="eth-win"> = 2  ether </span>
+				</div>
+
+				<div class="instruction-row">
+					<img src="../img/slot4.png" width="30" height="30"/>
+					<img src="../img/slot4.png" width="30" height="30"/>
+					<img src="../img/slot4.png" width="30" height="30"/>
+					<span class="eth-win"> = 1.5 ether </span>
+				</div>
+
+				<div class="instruction-row">
+					<img src="../img/slot3.png" width="30" height="30"/>
+					<img src="../img/slot3.png" width="30" height="30"/>
+					<img src="../img/slot3.png" width="30" height="30"/>
+					<span class="eth-win"> = 1.2 ether </span>
+				</div>
+
+				<div class="instruction-row">
+					<img src="../img/slot2.png" width="30" height="30"/>
+					<img src="../img/slot2.png" width="30" height="30"/>
+					<img src="../img/slot2.png" width="30" height="30"/>
+					<span class="eth-win"> = 1  ether </span>
+				</div>
+
+				<div class="instruction-row">
+					<img src="../img/slot1.png" width="30" height="30"/>
+					<img src="../img/slot1.png" width="30" height="30"/>
+					<img src="../img/slot1.png" width="30" height="30"/>
+					<span class="eth-win"> = 0.5 ether </span>
+				</div>
+			</div>
+     
         </div>
 
 		<!-- Slot machine example -->
 		<div id="casino" style="padding-top:50px; padding-bottom: 90px;">
 			<div class="content">
-				<h1 id="header-msg">Go ahead try your luck!</h1>
+				<h1 id="header-msg">Luck favors the bold!</h1>
 
 				<div>
 					<div id="casino1" class="slotMachine" style="margin-left: -65px;">
@@ -67,13 +109,14 @@
 					</div>
 
 					<div class="btn-group btn-group-justified btn-group-casino" role="group">
-						<div id="slotMachineButtonShuffle" type="button" class="btn btn-primary btn-lg">Shuffle!</div>
-						<div id="slotMachineButtonStop" type="button" class="btn btn-primary btn-lg">Stop!</div>
+						<div id="slotMachineButtonShuffle" type="button" class="btn btn-primary btn-lg">Let's roll</div>
+						<div id="slotMachineButtonStop" type="button" class="btn btn-primary btn-lg">Stop</div>
 					</div>
 				</div>
 
 			</div>
 		</div>
+		<div class="bottom-line"></div>
         </div>
 
 	</body>

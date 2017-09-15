@@ -29,29 +29,33 @@ contract SlotMachine {
         uint rand2 = randomGen(msg.value + 10);
         uint rand3 = randomGen(msg.value + 20);
 
-        uint result = gameLogic(rand1, rand2, rand3);
+        uint result = calculatePrize(rand1, rand2, rand3);
 
         Rolled(msg.sender, rand1, rand2, rand3);
 
-        // if(result == 1) {
-        //     pendingWithdrawals[msg.sender] += msg.value + coinPrice;
-        // } else if(result == 2) {
-            pendingWithdrawals[msg.sender] += msg.value;
-        //}
-
+        pendingWithdrawals[msg.sender] += result;
+        
     }
     
     function contractBalance() constant returns(uint) {
         return this.balance;
     }
 
-    function gameLogic(uint rand1, uint rand2, uint rand3) constant returns(uint) {
-        if((rand1 == rand2) && (rand1 == rand3)) {
-            return 1;
-        } else if ((rand1 == rand2) || (rand1 == rand3) || (rand2 == rand3)) {
-            return 2;
+    function calculatePrize(uint rand1, uint rand2, uint rand3) constant returns(uint) {
+        if(rand1 == 5 && rand2 == 5 && rand3 == 5) {
+            return coinPrice * 30;
+        } else if (rand1 == 6 && rand2 == 5 && rand3 == 6) {
+            return coinPrice * 20;
+        } else if (rand1 == 4 && rand2 == 4 && rand3 == 4) {
+            return coinPrice * 15;
+        } else if (rand1 == 3 && rand2 == 3 && rand3 == 3) {
+            return coinPrice * 12;
+        } else if (rand1 == 2 && rand2 == 2 && rand3 == 2) {
+            return coinPrice * 10;
+        } else if (rand1 == 1 && rand2 == 1 && rand3 == 1) {
+            return coinPrice * 5;
         } else {
-            return 3;
+            return 0;
         }
     }
 
@@ -75,7 +79,7 @@ contract SlotMachine {
     }
 
     function randomGen(uint seed) private constant returns (uint randomNumber) {
-        return(uint(sha3(block.blockhash(block.number-1), seed )) % 6);
+        return (uint(sha3(block.blockhash(block.number-1), seed )) % 6) + 1;
     }
 
 }

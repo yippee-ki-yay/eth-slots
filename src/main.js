@@ -57,7 +57,7 @@ App = {
         instance.withdraw.sendTransaction({from: App.account, value: 0}).then(function(resp) {
             console.log(resp);
 
-            setTimeout(App.checkBalance, 1500);
+            setTimeout(App.checkBalance, 2000);
  
         })
         .catch(function(err) {
@@ -116,7 +116,7 @@ App = {
 
     App.contracts.SlotMachine.deployed().then(function(instance) {
 
-        return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('1', 'ether')});
+        return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('0.1', 'ether')});
 
     }).then(function() {
         App.startShuffle();

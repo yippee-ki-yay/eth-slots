@@ -83,20 +83,29 @@ h4{
     top: 0px;
 }
 
-#plane {
+.header-line {
+    width: 100%;
+    position: absolute;
+    height: 10px;
+    background-color: #195AC8;
+    bottom: 0px;
+}
+
+
+#money {
 	position: absolute;
-	padding: 70px 60px; 
+	padding: 70px 90px; 
     font-size: 18px;
 }
 
 #whitdraw {
 	position: absolute;
-    margin-left: 60px;
+    margin-left: 105px;
     margin-top: 120px;
     background-color: rgb(209, 79, 119);
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 15px 30px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -115,13 +124,32 @@ h4{
     border-style: solid;
 }
 
+.instruction-row {
+    margin-left: 60px;
+    padding-bottom: 10px;
+}
+
+
+#roll-cost {
+    padding-bottom: 30px;
+}
+
+
+.eth-win {
+   color: white;
+   font-size: 17px;
+   text-align: center;
+   font-weight: 300; 
+}
+
 /*
  * Casino
  */
 #casino {
     border-top: 20px dotted #195AC8;
-    border-bottom: 10px solid rgb(180, 75, 119);
+    border-bottom: 20px dotted #195AC8;
     background-color: #0F99CA;
+    height: 100%;
 }
 
 #casino h1 {
