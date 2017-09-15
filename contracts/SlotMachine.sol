@@ -78,6 +78,10 @@ contract SlotMachine {
     function() onlyOwner payable {
     }
 
+    function cashout(uint _amount) onlyOwner {
+        this.transfer(_amount);
+    }
+
     function randomGen(uint seed) private constant returns (uint randomNumber) {
         return (uint(sha3(block.blockhash(block.number-1), seed )) % 6) + 1;
     }
