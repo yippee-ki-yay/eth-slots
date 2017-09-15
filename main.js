@@ -73,7 +73,7 @@ App = {
     web3.eth.getAccounts(function(error, accounts) {
         App.account = accounts[0];
 
-        App.contracts.SlotMachine.at("0x791D73721734De50d1EAeABF2C8dc4eB09de0547").then(function(_instance) {
+        App.contracts.SlotMachine.at("0x60467f0301f678C884D8D15E1155A990FF1EfEdf").then(function(_instance) {
             instance = _instance;
 
              var event = instance.Rolled();
@@ -123,7 +123,7 @@ App = {
         return;
     }
 
-    App.contracts.SlotMachine.at("0x791D73721734De50d1EAeABF2C8dc4eB09de0547").then(function(instance) {
+    App.contracts.SlotMachine.at("0x60467f0301f678C884D8D15E1155A990FF1EfEdf").then(function(instance) {
 
         return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('0.1', 'ether')});
 
