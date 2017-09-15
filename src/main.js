@@ -11,6 +11,7 @@ App = {
   roll1: -1,
   roll2: -1,
   roll3: -1,
+  rolled: false,
 
   init: function() {
     return App.initWeb3();
@@ -84,6 +85,8 @@ App = {
                      App.roll2 = resp.args.rand2.valueOf();
                      App.roll3 = resp.args.rand3.valueOf();
 
+                     App.rolled = true;
+
                      console.log(App.roll1, App.roll2, App.roll3);
 
                      setTimeout(App.checkBalance, 1000);
@@ -122,8 +125,6 @@ App = {
 
     }).then(function() {
         App.startShuffle();
-
-        return instance.getResult(App.account);
     })
     .catch(function(err) {
     console.log(err.message);
@@ -190,6 +191,12 @@ App = {
         App.started = 0;
 
         $("#slotMachineButtonStop").click(function(){
+
+            //if we didn't get the result from the blockchain
+            if(!App.rolled) {
+                return;
+            }
+
             switch(App.started){
                 case 3:
                     App.machine1.stop();
@@ -200,6 +207,8 @@ App = {
                 case 1:
                     App.machine3.stop();
                     App.prizeWon();
+
+                    App.rolled = false; //reset the roll logic
                     break;
             }
             App.started--;
