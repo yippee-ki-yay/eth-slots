@@ -3,6 +3,10 @@ App = {
   contracts: {},
   account: null,
   instance: null,
+  machine1: null,
+  machine2: null,
+  machine3: null,
+  started: 0,
   roll1: -1,
   roll2: -1,
   roll3: -1,
@@ -101,6 +105,7 @@ App = {
         return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('0.1', 'ether')});
 
     }).then(function() {
+        App.startShuffle();
 
         return instance.getResult(App.account);
     }).then(function(res) {
@@ -132,50 +137,50 @@ App = {
     }
   },
 
+  startShuffle: function() {
+    App.started = 3;
+    App.machine1.shuffle();
+    App.machine2.shuffle();
+    App.machine3.shuffle();
+  },
+
   slotMachine: function() {
 
-      	var machine1 = $("#casino1").slotMachine({
+      	App.machine1 = $("#casino1").slotMachine({
             active	: 0,
             delay	: 500
         });
 
-        var machine2 = $("#casino2").slotMachine({
+        App.machine2 = $("#casino2").slotMachine({
             active	: 1,
             delay	: 500
         });
 
-        var machine3 = $("#casino3").slotMachine({
+        App.machine3 = $("#casino3").slotMachine({
             active	: 2,
             delay	: 500
         });
 
-        machine1.setRandomize(function() { return App.roll1; });
-        machine2.setRandomize(function() { return App.roll2; });
-        machine3.setRandomize(function() { return App.roll3; });
+        App.machine1.setRandomize(function() { return App.roll1; });
+        App.machine2.setRandomize(function() { return App.roll2; });
+        App.machine3.setRandomize(function() { return App.roll3; });
 
-        var started = 0;
-
-        $("#slotMachineButtonShuffle").click(function(){
-            started = 3;
-            machine1.shuffle();
-            machine2.shuffle();
-            machine3.shuffle();
-        });
+        App.started = 0;
 
         $("#slotMachineButtonStop").click(function(){
-            switch(started){
+            switch(App.started){
                 case 3:
-                    machine1.stop();
+                    App.machine1.stop();
                     break;
                 case 2:
-                    machine2.stop();
+                    App.machine2.stop();
                     break;
                 case 1:
-                    machine3.stop();
+                    App.machine3.stop();
                     App.prizeWon();
                     break;
             }
-            started--;
+            App.started--;
         });
   }
 
