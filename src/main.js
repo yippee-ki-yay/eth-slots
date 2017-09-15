@@ -1,6 +1,7 @@
 App = {
   web3Provider: null,
   contracts: {},
+  balance: 0,
   account: null,
   instance: null,
   machine1: null,
@@ -52,13 +53,19 @@ App = {
   },
 
   whitdraw: function() {
-    instance.withdraw.call().then(function(resp) {
-        console.log(resp);
-        App.checkBalance();
-    })
-    .catch(function(err) {
-        console.log(err);
-    });
+      if(App.balance != 0) {
+        instance.withdraw.sendTransaction({from: App.account, value: 0}).then(function(resp) {
+            console.log(resp);
+
+            setTimeout(App.checkBalance, 1500);
+ 
+        })
+        .catch(function(err) {
+            console.log(err);
+        });
+      } else {
+          alert("Win balance is zero no ether to withdraw");
+      }
   },
 
   checkAccount: function() {
@@ -81,13 +88,11 @@ App = {
 
    checkBalance: function() {
 
-    console.log("Acc: " + App.account);
+    instance.balanceOf.call(App.account).then(function(_balance) {
 
-    instance.balanceOf.call(App.account).then(function(balance) {
+        App.balance = _balance.valueOf();
 
-        var balance = balance.valueOf();
-
-        var balanceInEther = web3.fromWei(balance, "ether");
+        var balanceInEther = web3.fromWei(App.balance, "ether");
 
         $("#balance").text(balanceInEther + " ether");
         
@@ -102,7 +107,7 @@ App = {
 
     App.contracts.SlotMachine.deployed().then(function(instance) {
 
-        return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('0.1', 'ether')});
+        return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('1', 'ether')});
 
     }).then(function() {
         App.startShuffle();
@@ -126,8 +131,6 @@ App = {
 
   prizeWon: function() {
 
-    console.log("Prize won");
-
     if((App.roll1 == App.roll2) && (App.roll1 == App.roll3)) {
         $("#header-msg").text("Congratulation you won!!!");
     } else if ((App.roll1 == App.roll2) || (App.roll1 == App.roll3) || (App.roll2 == App.roll3)) {
@@ -135,6 +138,8 @@ App = {
     } else {
         $("#header-msg").text("Ouch, maybe another try?");
     }
+
+    App.checkBalance();
   },
 
   startShuffle: function() {
