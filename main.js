@@ -81,6 +81,10 @@ App = {
              event.watch(function(err, resp) {
                  if(resp.event === "Rolled") {
 
+                     $("#slotMachineButtonStop").attr("disabled", false);
+                     $("#slotMachineButtonStop").attr("title", "");
+                     $("#header-msg").text("Luck favors the bold!");
+
                      App.roll1 = resp.args.rand1.valueOf();
                      App.roll2 = resp.args.rand2.valueOf();
                      App.roll3 = resp.args.rand3.valueOf();
@@ -136,19 +140,19 @@ App = {
     var msg = "";
 
     if(App.roll1 == 5 && App.roll2 == 5 && App.roll3 == 5) {
-        msg = "Congratulation you won 3 ether";
+        msg = "Congratulation you won 3 ether!";
     } else if(App.roll1 == 6 && App.roll2 == 5 && App.roll3 == 6)  {
-        msg = "Congratulation you won 2 ether";
+        msg = "Congratulation you won 2 ether!";
     } else if(App.roll1 == 4 && App.roll2 == 4 && App.roll3 == 4)  {
-        msg = "Congratulation you won 1.5 ether";
+        msg = "Congratulation you won 1.5 ether!";
     } else if(App.roll1 == 3 && App.roll2 == 3 && App.roll3 == 3)  {
-        msg = "Congratulation you won 1.2 ether";
+        msg = "Congratulation you won 1.2 ether!";
     } else if(App.roll1 == 2 && App.roll2 == 2 && App.roll3 == 2)  {
-        msg = "Congratulation you won 1 ether";
+        msg = "Congratulation you won 1 ether!";
     } else if(App.roll1 == 1 && App.roll2 == 1 && App.roll3 == 1)  {
-        msg = "Congratulation you won 0.5 ether";
+        msg = "Congratulation you won 0.5 ether!";
     } else {
-        msg = "Better luck next time";
+        msg = "Better luck next time!";
     }
 
     $("#header-msg").text(msg);
@@ -165,6 +169,13 @@ App = {
     App.machine3.shuffle();
 
     $("#slotMachineButtonShuffle").attr("disabled", true);
+    $("#slotMachineButtonStop").attr("disabled", true);
+
+    var pls = "Getting the result from ethereum...";
+
+    $("#slotMachineButtonStop").attr("title", pls);
+
+    $("#header-msg").text(pls);
   },
 
   slotMachine: function() {
