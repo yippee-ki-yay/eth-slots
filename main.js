@@ -150,9 +150,9 @@ App = {
     } else if(App.roll1 == 2 && App.roll2 == 2 && App.roll3 == 2)  {
         msg = "Congratulation you won 1 ether!";
     } else if(App.roll1 == 1 && App.roll2 == 1 && App.roll3 == 1)  {
-        msg = "Congratulation you get your 0.1 ether back!";
+        msg = "Congratulation you won 0.5 ether!";
     } else if((App.roll1 == App.roll2) || (App.roll1 == App.roll2) || (App.roll2 == App.roll3)) {
-
+        msg = "Congratulation you get your 0.1 ether back!";
     } else {
         msg = "Better luck next time!";
     }
