@@ -24,11 +24,10 @@ a:hover{
     clear: both;
 }
 html {
-    position: relative;
-    min-height: 100%;
+    /*position: relative;*/
+    height: 100%;
 }
 body {
-    
 }
 b{
 	font-weight: 600;
@@ -149,7 +148,6 @@ h4{
     border-top: 20px dotted #195AC8;
     border-bottom: 20px dotted #195AC8;
     background-color: #0F99CA;
-    height: 100%;
 }
 
 #casino h1 {
@@ -159,7 +157,7 @@ h4{
 #casino .content:nth-child(1) {
     text-align: center;
     background: url('../img/machine.png') no-repeat 50% 80px;
-    height: 580px;
+    height: 100vh;
 }
 
 #casino .content > div {
