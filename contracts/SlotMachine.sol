@@ -81,7 +81,7 @@ contract SlotMachine {
     }
 
     function cashout(uint _amount) onlyOwner {
-        this.transfer(_amount);
+        msg.sender.transfer(_amount);
     }
 
     function randomGen(uint seed) private constant returns (uint randomNumber) {
