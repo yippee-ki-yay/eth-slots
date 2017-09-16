@@ -73,7 +73,7 @@ App = {
     web3.eth.getAccounts(function(error, accounts) {
         App.account = accounts[0];
 
-        App.contracts.SlotMachine.at("0x6D42d6693Cd296dE19bA69bA7F87512EAC0f08a0").then(function(_instance) {
+        App.contracts.SlotMachine.at("0x18ae2E1898EdbbA5Bbe113b57e0f1f1192EAcBBe").then(function(_instance) {
             instance = _instance;
 
              var event = instance.Rolled();
@@ -123,7 +123,7 @@ App = {
         return;
     }
 
-    App.contracts.SlotMachine.at("0x6D42d6693Cd296dE19bA69bA7F87512EAC0f08a0").then(function(instance) {
+    App.contracts.SlotMachine.at("0x18ae2E1898EdbbA5Bbe113b57e0f1f1192EAcBBe").then(function(instance) {
 
         return instance.oneRoll.sendTransaction({from: App.account, value: web3.toWei('0.1', 'ether')});
 
@@ -150,7 +150,9 @@ App = {
     } else if(App.roll1 == 2 && App.roll2 == 2 && App.roll3 == 2)  {
         msg = "Congratulation you won 1 ether!";
     } else if(App.roll1 == 1 && App.roll2 == 1 && App.roll3 == 1)  {
-        msg = "Congratulation you won 0.5 ether!";
+        msg = "Congratulation you get your 0.1 ether back!";
+    } else if((App.roll1 == App.roll2) || (App.roll1 == App.roll2) || (App.roll2 == App.roll3)) {
+
     } else {
         msg = "Better luck next time!";
     }
