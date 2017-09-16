@@ -105,7 +105,6 @@ App = {
 
                      toastr.success('Go ahead!', 'Press Stop to find out if you won');
 
-                     setTimeout(App.checkBalance, 1000);
                  }
              });
 
