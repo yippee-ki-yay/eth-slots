@@ -66,7 +66,7 @@ contract SlotMachine {
 
         pendingWithdrawals[msg.sender] = 0;
 
-        this.transfer(amount);
+        msg.sender.transfer(amount);
     }
 
     function balanceOf(address user) constant returns(uint) {
