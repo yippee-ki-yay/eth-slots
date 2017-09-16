@@ -26,6 +26,8 @@ App = {
       // set the provider you want from Web3.providers
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
       web3 = new Web3(App.web3Provider);
+      toastr.warning('You need MetaMask extension or Parity to use this app.');
+
     }
 
     return App.initContract();
@@ -35,13 +37,18 @@ App = {
     $.getJSON('SlotMachine.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
       var SlotMachineArtifact = data;
-      App.contracts.SlotMachine = TruffleContract(SlotMachineArtifact);
 
-      // Set the provider for our contract.
-      App.contracts.SlotMachine.setProvider(App.web3Provider);
+      try {
+         App.contracts.SlotMachine = TruffleContract(SlotMachineArtifact);
 
-      App.checkAccount();
-      App.slotMachine();
+        // Set the provider for our contract.
+        App.contracts.SlotMachine.setProvider(App.web3Provider);
+
+        App.checkAccount();
+        App.slotMachine();
+      } catch(err) {
+          console.log(err);
+      }
 
     });
 
@@ -54,6 +61,9 @@ App = {
   },
 
   whitdraw: function() {
+
+       App.checkBalance();
+
       if(App.balance != 0) {
         instance.withdraw.sendTransaction({from: App.account, value: 0}).then(function(resp) {
             console.log(resp);
@@ -65,7 +75,7 @@ App = {
             console.log(err);
         });
       } else {
-          alert("Win balance is zero no ether to withdraw");
+          toastr.error('You have no money to withdraw');
       }
   },
 
@@ -93,11 +103,16 @@ App = {
 
                      console.log(App.roll1, App.roll2, App.roll3);
 
+                     toastr.success('Go ahead!', 'Press Stop to find out if you won');
+
                      setTimeout(App.checkBalance, 1000);
                  }
              });
 
             App.checkBalance();
+        })
+        .catch(function(err) {
+            toastr.warning('Make sure you are connected to Ropsten network');
         });
     });
   },
@@ -131,7 +146,7 @@ App = {
         App.startShuffle();
     })
     .catch(function(err) {
-    console.log(err.message);
+        toastr.warning('Make sure you are connected to Ropsten network');
     });
   },
 
@@ -150,9 +165,9 @@ App = {
     } else if(App.roll1 == 2 && App.roll2 == 2 && App.roll3 == 2)  {
         msg = "Congratulation you won 1 ether!";
     } else if(App.roll1 == 1 && App.roll2 == 1 && App.roll3 == 1)  {
-        msg = "Congratulation you get your 0.1 ether back!";
-    } else if((App.roll1 == App.roll2) || (App.roll1 == App.roll2) || (App.roll2 == App.roll3)) {
-
+        msg = "Congratulation you won 0.5 ether";
+    } else if((App.roll1 == App.roll2) || (App.roll1 == App.roll3) || (App.roll2 == App.roll3)) {
+        msg = "Good job you get your 0.1 ether back!";
     } else {
         msg = "Better luck next time!";
     }
@@ -160,6 +175,8 @@ App = {
     $("#header-msg").text(msg);
 
     App.checkBalance();
+
+    toastr.success(msg);
 
     $("#slotMachineButtonShuffle").attr("disabled", false);
   },
