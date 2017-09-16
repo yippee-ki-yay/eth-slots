@@ -54,6 +54,8 @@ contract SlotMachine {
             return coinPrice * 10;
         } else if (rand1 == 1 && rand2 == 1 && rand3 == 1) {
             return coinPrice * 5;
+        } else if ((rand1 == rand2) || (rand1 == rand3) || (rand2 == rand3)) {
+            return coinPrice;
         } else {
             return 0;
         }
